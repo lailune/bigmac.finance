@@ -983,7 +983,7 @@ contract BigmacChef is Ownable {
    // NO INFINITE MINTING HERE
    // function mint(uint256 amount) public onlyOwner {
   //      bigmac.mint(devaddr, amount);
-  //  }/*
+  //  }
 
 
     // Update reward variables of the given pool to be up-to-date.
