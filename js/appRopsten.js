@@ -1552,6 +1552,8 @@ async function connectWeb3() {
         web3.eth.getAccounts().then(console.log);
 
         return true;
+    }else{
+        alert('Hi. It looks like your browser does not support Web3. Please install a MetaMask or a similar product to connect to the Ethereum network');
     }
 }
 

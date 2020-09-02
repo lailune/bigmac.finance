@@ -979,10 +979,11 @@ contract BigmacChef is Ownable {
             updatePool(pid);
         }
     }
-    // TODO Remove that
-    function mint(uint256 amount) public onlyOwner {
-        bigmac.mint(devaddr, amount);
-    }
+
+   // NO INFINITE MINTING HERE
+   // function mint(uint256 amount) public onlyOwner {
+  //      bigmac.mint(devaddr, amount);
+  //  }/*
 
 
     // Update reward variables of the given pool to be up-to-date.
@@ -997,22 +998,22 @@ contract BigmacChef is Ownable {
             return;
         }
 
-        //Множитель вычисляется исходя из расстояния между текущим блоком, и последнем блоком пересчёта пула
+        //The multiplier is calculated based on the distance between the current block and the last block of the pool recalculation
         uint256 multiplier = getMultiplier(pool.lastRewardBlock, block.number);
 
-        //Вознаграждение = множитель (1) * бигмакиНаБлок * множительПары * суммуВсехМножителейПар
+        //Reward = Multiplier (1) * Big MacsOn Block * MultiplierPairs * Sum of AllMultipliersPairs
         uint256 bigmacReward = multiplier.mul(bigmacPerBlock).mul(pool.allocPoint).div(totalAllocPoint);
 
-        //Переводим разрабочтикам вознаграждение / 20
+        //We transfer remuneration to developers / 20
         bigmac.mint(devaddr, bigmacReward.div(20)); // 5%
 
-        //Переводим вознаграждение себе на контракт (запасаем)
+        //We transfer the remuneration to our contract (we reserve)
         bigmac.mint(address(this), bigmacReward);
 
-        //Складываем сумму бигмаков на шару внутри пула (вознаграждение *  1e12 / количествоТокеновВпуле)
+        //Add up the amount of big macs per ball inside the pool (reward * 1e12 / number of TokensIn the pool)
         pool.accBigmacPerShare = pool.accBigmacPerShare.add(bigmacReward.mul(1e12).div(lpSupply));
 
-        //Сохраняем блок последнего пересчета пула
+        //Save the block of the last pool recalculation
         pool.lastRewardBlock = block.number;
     }
 
