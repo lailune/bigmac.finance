@@ -4,7 +4,6 @@
  * /
  /**
  * BigMac Finance
- * @author Andrey Nedobylsky, Vyacheslav Semenchuk
  *
  */
 
@@ -823,7 +822,7 @@ var chefABI = [{
         "name": "_user",
         "type": "address"
     }],
-    "name": "pendingKimchi",
+    "name": "pendingBigmac",
     "outputs": [{"internalType": "uint256", "name": "", "type": "uint256"}],
     "stateMutability": "view",
     "type": "function"
