@@ -856,13 +856,13 @@ contract BigmacChef is Ownable {
         uint256 amount;     // How many LP tokens the user has provided.
         uint256 rewardDebt; // Reward debt. See explanation below.
         //
-        // We do some fancy math here. Basically, any point in time, the amount of KIMCHIs
+        // We do some fancy math here. Basically, any point in time, the amount of Bigmacs
         // entitled to a user but is pending to be distributed is:
         //
-        //   pending reward = (user.amount * pool.accKimchiPerShare) - user.rewardDebt
+        //   pending reward = (user.amount * pool.accBigmacPerShare) - user.rewardDebt
         //
         // Whenever a user deposits or withdraws LP tokens to a pool. Here's what happens:
-        //   1. The pool's `accKimchiPerShare` (and `lastRewardBlock`) gets updated.
+        //   1. The pool's `accBigmacPerShare` (and `lastRewardBlock`) gets updated.
         //   2. User receives the pending reward sent to his/her address.
         //   3. User's `amount` gets updated.
         //   4. User's `rewardDebt` gets updated.
@@ -871,20 +871,20 @@ contract BigmacChef is Ownable {
     // Info of each pool.
     struct PoolInfo {
         IERC20 lpToken;           // Address of LP token contract.
-        uint256 allocPoint;       // How many allocation points assigned to this pool. KIMCHIs to distribute per block.
-        uint256 lastRewardBlock;  // Last block number that KIMCHIs distribution occurs.
-        uint256 accBigmacPerShare; // Accumulated KIMCHIs per share, times 1e12. See below.
+        uint256 allocPoint;       // How many allocation points assigned to this pool.  Bigmacs to distribute per block.
+        uint256 lastRewardBlock;  // Last block number that  Bigmacs distribution occurs.
+        uint256 accBigmacPerShare; // Сумма Бигмаков на шаре умноженное на 1e12
     }
 
-    // The KIMCHI TOKEN!
+    // Tadadada I'm lovin DeFi
     BigmacToken public bigmac;
     // Dev address.
     address public devaddr;
-    // Block number when bonus KIMCHI period ends.
+    // Block number when bonus  Bigmac period ends.
     uint256 public bonusEndBlock;
-    // KIMCHI tokens created per block.
+    //  Bigmac tokens created per block.
     uint256 public bigmacPerBlock;
-    // Bonus muliplier for early kimchi makers.
+    // Bonus muliplier for early  Bigmac makers.
     uint256 public constant BONUS_MULTIPLIER = 1; // no bonus
 
     // Info of each pool.
@@ -893,7 +893,7 @@ contract BigmacChef is Ownable {
     mapping(uint256 => mapping(address => UserInfo)) public userInfo;
     // Total allocation poitns. Must be the sum of all allocation points in all pools.
     uint256 public totalAllocPoint = 0;
-    // The block number when KIMCHI mining starts.
+    // The block number when  Bigmac mining starts.
     uint256 public startBlock;
 
     event Deposit(address indexed user, uint256 indexed pid, uint256 amount);
@@ -934,7 +934,7 @@ contract BigmacChef is Ownable {
         }));
     }
 
-    // Update the given pool's KIMCHI allocation point. Can only be called by the owner.
+    // Update the given pool's Bigmac allocation point. Can only be called by the owner.
     function set(uint256 _pid, uint256 _allocPoint, bool _withUpdate) public onlyOwner {
         if (_withUpdate) {
             massUpdatePools();
@@ -958,7 +958,7 @@ contract BigmacChef is Ownable {
         }
     }
 
-    // View function to see pending KIMCHIs on frontend.
+    // View function to see pending Bigmacs on frontend.
     function pendingBigmac(uint256 _pid, address _user) external view returns (uint256) {
         PoolInfo storage pool = poolInfo[_pid];
         UserInfo storage user = userInfo[_pid][_user];
@@ -979,10 +979,12 @@ contract BigmacChef is Ownable {
             updatePool(pid);
         }
     }
-    // Update reward variables of the given pool to be up-to-date.
+    // TODO Remove that
     function mint(uint256 amount) public onlyOwner {
         bigmac.mint(devaddr, amount);
     }
+
+
     // Update reward variables of the given pool to be up-to-date.
     function updatePool(uint256 _pid) public {
         PoolInfo storage pool = poolInfo[_pid];
@@ -994,15 +996,27 @@ contract BigmacChef is Ownable {
             pool.lastRewardBlock = block.number;
             return;
         }
+
+        //Множитель вычисляется исходя из расстояния между текущим блоком, и последнем блоком пересчёта пула
         uint256 multiplier = getMultiplier(pool.lastRewardBlock, block.number);
+
+        //Вознаграждение = множитель (1) * бигмакиНаБлок * множительПары * суммуВсехМножителейПар
         uint256 bigmacReward = multiplier.mul(bigmacPerBlock).mul(pool.allocPoint).div(totalAllocPoint);
+
+        //Переводим разрабочтикам вознаграждение / 20
         bigmac.mint(devaddr, bigmacReward.div(20)); // 5%
+
+        //Переводим вознаграждение себе на контракт (запасаем)
         bigmac.mint(address(this), bigmacReward);
+
+        //Складываем сумму бигмаков на шару внутри пула (вознаграждение *  1e12 / количествоТокеновВпуле)
         pool.accBigmacPerShare = pool.accBigmacPerShare.add(bigmacReward.mul(1e12).div(lpSupply));
+
+        //Сохраняем блок последнего пересчета пула
         pool.lastRewardBlock = block.number;
     }
 
-    // Deposit LP tokens to MasterChef for KIMCHI allocation.
+    // Deposit LP tokens to MasterChef for  Bigmac allocation.
     function deposit(uint256 _pid, uint256 _amount) public {
         PoolInfo storage pool = poolInfo[_pid];
         UserInfo storage user = userInfo[_pid][msg.sender];
@@ -1021,7 +1035,7 @@ contract BigmacChef is Ownable {
     function withdraw(uint256 _pid, uint256 _amount) public {
         PoolInfo storage pool = poolInfo[_pid];
         UserInfo storage user = userInfo[_pid][msg.sender];
-        require(user.amount >= _amount, "withdraw: not good");
+        require(user.amount >= _amount, "Withdraw: Insufficient funds");
         updatePool(_pid);
         uint256 pending = user.amount.mul(pool.accBigmacPerShare).div(1e12).sub(user.rewardDebt);
         safeBigmacTransfer(msg.sender, pending);
@@ -1041,7 +1055,7 @@ contract BigmacChef is Ownable {
         user.rewardDebt = 0;
     }
 
-    // Safe kimchi transfer function, just in case if rounding error causes pool to not have enough KIMCHIs.
+    // Safe  Bigmac transfer function, just in case if rounding error causes pool to not have enough  Bigmacs.
     function safeBigmacTransfer(address _to, uint256 _amount) internal {
         uint256 bigmacBal = bigmac.balanceOf(address(this));
         if (_amount > bigmacBal) {
@@ -1053,7 +1067,7 @@ contract BigmacChef is Ownable {
 
     // Update dev address by the previous dev.
     function dev(address _devaddr) public {
-        require(msg.sender == devaddr, "dev: wut?");
+        require(msg.sender == devaddr, "Nope");
         devaddr = _devaddr;
     }
 }

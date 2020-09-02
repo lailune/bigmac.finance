@@ -10,6 +10,8 @@
 
 // note: USDT, USDC decimal = 6
 
+const BIGMAC_PER_BLOCK = 1000;
+
 var ethconnected = false;
 var ethaddress = "0x";
 var balance = 0;
@@ -36,7 +38,8 @@ var prices = {
 }
 //contract,name,url,weight,yield
 var pools = [
-    ["0x2E8AFE2c3180fF925251B508F8487FECA94DDBF7", "Uniswap BC/ETH", "https://uniswap.info/pair/0x2E8AFE2c3180fF925251B508F8487FECA94DDBF7", 4, 0, 0],
+    ["0x2E8AFE2c3180fF925251B508F8487FECA94DDBF7", "Uniswap BC/ETH", "https://uniswap.info/pair/0x2E8AFE2c3180fF925251B508F8487FECA94DDBF7", 4, 0, 0, 'bc.png'],
+    ["0x43dC8D78E1Cb5FA4ce3A24aE40570438ED7Ea56c", "Uniswap BIG/ETH", "https://uniswap.info/pair/0x43dC8D78E1Cb5FA4ce3A24aE40570438ED7Ea56c", 3, 0, 0, 'logoBigmac.svg'],
     /*["0xc8d02f2669ef9aabe6b3b75e2813695aed63748d", "KIMCHI with SUSHI", "https://uniswap.info/pair/0xc8d02f2669ef9aabe6b3b75e2813695aed63748d", 3, 0, 0],
     ["0x1f4e87f70002867ab5df276d6a09a94e3eda4f9a", "KIMCHI with TEND", "https://uniswap.info/pair/0x1f4e87f70002867ab5df276d6a09a94e3eda4f9a", 2, 0, 0],
     ["0x0d4a11d5eeaac28ec3f61d100daf4d40471f1852", "UNISWAP ETH/USDT", "https://uniswap.info/pair/0x0d4a11d5eeaac28ec3f61d100daf4d40471f1852", 1, 0, 0],
@@ -1341,13 +1344,13 @@ var tokenABI = [
 
 function updateYield() {
     // need modification
-    var perblock = 1000;
+    var perblock = BIGMAC_PER_BLOCK;
     var annualblock = 365 * 86400 / 13; // approximation of 13 sec/block
     var annualreward = annualblock * perblock;
     var perpoolunit = annualreward / totalPoolWeight;
 
 
-    function createPoolHandler(pool, priceTicker , priceReserve = '_reserve0') {
+    function createPoolHandler(pool, priceTicker, cssSelector, priceReserve = '_reserve0',) {
         var ctx1 = new web3.eth.Contract(uniswapABI, pool[0]);
         ctx1.methods.getReserves().call(function (err, result1) {
             ctx1.methods.totalSupply().call(function (err, result2) {
@@ -1362,7 +1365,7 @@ function updateYield() {
                     pools[4] = (((perpoolunit / (result1[priceReserve] * 2 / Math.pow(10, 18))) * 100 * pool[3]) / percentageOfSupplyInPool);
                     pools[5] = (prices[priceTicker] * result1[priceReserve] * 2 / Math.pow(10, 18) * percentageOfSupplyInPool);
                     //console.log(result2,result3,percentageOfSupplyInPool,perpoolunit,result1['_reserve0']/Math.pow(10,18),pools[1][3]);
-                    $('.pool1yield').animateNumbers(parseInt(pool[4]) + '%')
+                    $(cssSelector).animateNumbers(parseInt(pool[4]) + '%')
                     loadedPool()
                 });
             });
@@ -1371,7 +1374,8 @@ function updateYield() {
         return ctx1;
     }
 
-    let cxt0 = createPoolHandler(pools[0],'bigmacusd');
+    let cxt0 = createPoolHandler(pools[0], 'bigmacusd', '.pool0yield');
+    let cxt1 = createPoolHandler(pools[1], 'bigmacusd', '.pool1yield');
 
     //uniswap _revserve0 and 1 is amount*decimal of each token
     /*   var ctx0 = new web3.eth.Contract(uniswapABI, pools[0][0]);
@@ -1605,12 +1609,15 @@ function initpooldata(id) {
     currentPagePoolID = id
     //get yield balance
 
+    $('#poolImage').attr('src', '/images/' + pools[id][6]);
+
     //get staked balance
     //if larger than zero, approved
 
 
     var contract = new web3.eth.Contract(chefABI, chefAddress);
     contract.methods.userInfo(currentPagePoolID, ethaddress).call(function (error, result) {
+        console.log(result);
         currentPageStaked = result[0]
         result[0] = (result[0] / Math.pow(10, 18)).toFixedSpecial(7)
         //console.log(error, result)

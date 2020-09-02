@@ -204,6 +204,15 @@ body {
     background-image: url('/images/bigmac.png')
 }
 
+.bigmac {
+    background-position-x: -2px;
+    background-image: url('/images/logoBigmac.svg')
+}
+
+.bc {
+    background-image: url('/images/bc.png')
+}
+
 .sushi {
     background-image: url('/images/sushi.png')
 }
@@ -248,4 +257,8 @@ body {
 
 .text-muted {
     color: #dddfe1 !important;
+}
+
+.badge-primary {
+    background-color: #ff0000;
 }
