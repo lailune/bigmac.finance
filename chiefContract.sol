@@ -873,7 +873,7 @@ contract BigmacChef is Ownable {
         IERC20 lpToken;           // Address of LP token contract.
         uint256 allocPoint;       // How many allocation points assigned to this pool.  Bigmacs to distribute per block.
         uint256 lastRewardBlock;  // Last block number that  Bigmacs distribution occurs.
-        uint256 accBigmacPerShare; // Сумма Бигмаков на шаре умноженное на 1e12
+        uint256 accBigmacPerShare; // The sum of the Big Macs on the ball multiplied by 1e12
     }
 
     // Tadadada I'm lovin DeFi
