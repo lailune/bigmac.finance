@@ -3,7 +3,7 @@
 <head>
 
     <link rel="icon" href="images/bigmac.png">
-    <title>ROPSTEN Bigmac Finance - I’m Lovin’ DEFI </title>
+    <title>BigMac Finance - I’m Lovin’ DEFI </title>
     <!-- CSS only -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
           integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
@@ -74,7 +74,7 @@
         })(jQuery);
 
     </script>
-    <script src="/js/appRopsten.js?v=6"></script>
+    <script src="/js/appRopsten.js?v=7"></script>
 
 
 </head>
@@ -147,15 +147,17 @@
 
         Bigmac has been forked from SUSHI and KIMCHI<br><br>
 
-        Bigmac Generation in every BLOCK FOREVER<br><br>
+        Bigmac Farming in every BLOCK FOREVER<br><br>
 
         5X on BIG / ETH <br><br>
 
-        4x BIG / KIMCHI <br><br>
+        <!--  4x BIG / KIMCHI <br><br>
 
-        3X on BIG / SUSHI <br><br>
+          3X on BIG / SUSHI <br><br>
 
-        2X on BIG / BC <br><br>
+          2X on BIG / BC <br><br> -->
+
+        Now we adding more farming pairs. Stay tuned! <br><br>
 
         Unlike other projects, BigMac is the most honest and receives not 5%, but 2.5%. <br><br><br>
 
@@ -183,7 +185,7 @@
 
         <div class="">
             <div class="card  swapcard">
-                <span class="badge badge-primary yield-badge">4x</span>
+                <span class="badge badge-primary yield-badge">5x</span>
                 <div class="card-body">
                     <div class="tokenpair">
                         <div class="token1 bc"></div>
@@ -202,7 +204,7 @@
 
             <div class="card swapcard">
                 <div class="card-body">
-                    <span class="badge badge-primary yield-badge">3x</span>
+                    <span class="badge badge-primary yield-badge">2x</span>
                     <div class="tokenpair">
                         <div class="token1 bigmac"></div>
                         <div class="token2 eth"></div>
@@ -213,6 +215,43 @@
                         Farm
                     </a>
                     <a href="#" class="card-link btn btn-primary btn-lg" onclick="getlptoken(1)">
+                        Trade
+                    </a>
+                </div>
+            </div>
+
+
+            <div class="card swapcard">
+                <div class="card-body">
+                    <span class="badge badge-primary yield-badge">3x</span>
+                    <div class="tokenpair">
+                        <div class="token1 kimchi"></div>
+                        <div class="token2 eth"></div>
+                    </div>
+                    <h6 class="card-subtitle mb-2 text-muted">Uniswap KIMCHI/ETH</h6>
+                    <H2 class="card-text apy0">APY <span class="pool2yield">---.-%</span></H2>
+                    <a href="#pool2" onclick="nav('pool2')" class="card-link btn btn-primary btn-lg">
+                        Farm
+                    </a>
+                    <a href="#" class="card-link btn btn-primary btn-lg" onclick="getlptoken(2)">
+                        Trade
+                    </a>
+                </div>
+            </div>
+
+            <div class="card swapcard">
+                <div class="card-body">
+                    <span class="badge badge-primary yield-badge">2x</span>
+                    <div class="tokenpair">
+                        <div class="token1 sushi"></div>
+                        <div class="token2 eth"></div>
+                    </div>
+                    <h6 class="card-subtitle mb-2 text-muted">Uniswap SUSHI/ETH</h6>
+                    <H2 class="card-text apy0">APY <span class="pool3yield">---.-%</span></H2>
+                    <a href="#pool3" onclick="nav('pool3')" class="card-link btn btn-primary btn-lg">
+                        Farm
+                    </a>
+                    <a href="#" class="card-link btn btn-primary btn-lg" onclick="getlptoken(3)">
                         Trade
                     </a>
                 </div>
@@ -377,11 +416,19 @@
 
     <footer class="mastfoot">
         <div class="inner">
-            <p><a href="https://etherscan.io/address/0x#code" target="_blank">BigMac Token Contract</a>
-                · <a href="https://etherscan.io/address/0x#code" target="_blank">BigMac Chef Contract</a>
-                · <a href="https://uniswap.info/pair/0x" target="_blank">Bigmac-ETH Uniswap Pair</a>
+            <p>
                 · <a href="https://twitter.com/BigmacFinance" target="_blank">Twitter</a>
-                · <a href="https://discord.gg/JQjEs2J" target="_blank">Discord</a></p>
+                · <a href="https://discord.gg/JQjEs2J" target="_blank">Discord</a>
+                · <a href="https://t.me/bigmacfin" target="_blank">Telegram</a>
+                <br>
+                <br>
+
+                <a href="https://etherscan.io/address/0x0ba3212a73f5c67F2F907eF14E7E2883Af9F1e35#code" target="_blank">BigMac Token Contract</a>
+                · <a href="https://etherscan.io/address/0x407659a1391F020786bfB10Abfe82EE129302009#code" target="_blank">BigMac Chef Contract</a>
+                · <a href="https://uniswap.info/pair/0x" target="_blank">Bigmac-ETH Uniswap Pair</a>
+
+
+            </p>
         </div>
     </footer>
 </div>

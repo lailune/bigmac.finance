@@ -45,7 +45,7 @@ body {
 }
 
 .cover-container {
-    max-width: 42em;
+    max-width: 50em;
 }
 
 /*
@@ -201,7 +201,7 @@ body {
 }
 
 .kimchi {
-    background-image: url('/images/bigmac.png')
+    background-image: url('/images/kimchi.png')
 }
 
 .bigmac {
